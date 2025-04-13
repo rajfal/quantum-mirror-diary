@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Load all entries from the 'present-reality' collection
+const entries = await getCollection('present-reality');
+
+// Sort by date (newest first)
+entries.sort((a, b) => {
+  return b.data.date.localeCompare(a.data.date);
+});
+---
+
+<BaseLayout>
+
+<style>
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  li {
+    margin: 0.75rem 0;
+  }
+
+  a {
+    color: #e0e0ff;
+    text-decoration: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  a:hover {
+    color: #00d1ff;
+    border-bottom: 2px solid #00d1ff;
+  }
+</style>
+
+  <h1>Archive</h1>
+  <ul>
+    {entries.map(entry => (
+      <li>
+        <a href={`/${entry.slug}`}>{entry.data.date} — {entry.data.title}</a>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
+

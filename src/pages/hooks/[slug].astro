@@ -1,0 +1,23 @@
+---
+export const prerender = false;
+
+import { getEntryBySlug } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const { slug } = Astro.params;
+const hook = await getEntryBySlug('hooks', slug);
+
+if (!hook) {
+  throw new Error(`Hook not found: ${slug}`);
+}
+
+const { Content } = await hook.render();
+const { data } = hook;
+---
+
+<BaseLayout>
+  <article class="hook-article">
+    <h1 class="hook-title">⧉ {data.title}</h1>
+    <Content />
+  </article>
+</BaseLayout>

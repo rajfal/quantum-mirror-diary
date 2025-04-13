@@ -1,0 +1,49 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quantum Mirror Diary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+ 
+<style>
+  :root {
+    --bg: #101014;
+    --text: #eaeaea;
+    --accent: #d67dff;
+    --echo: #00eaff;
+    --font-body: 'Share Tech Mono', monospace;
+    --font-serif: 'Playfair Display', serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  main {
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+</style>
+
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

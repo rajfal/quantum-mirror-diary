@@ -1,0 +1,28 @@
+---
+import DiaryEntryLayout from '../layouts/DiaryEntryLayout.astro';
+import { getCollection, getEntryBySlug } from 'astro:content';
+
+import { getCypherDate } from '../utils/getCypherDate.js';
+
+// Get the most recent entry from present-reality
+const entries = await getCollection('present-reality');
+entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
+const latest = entries[0];
+const slug = latest?.slug;
+
+const cypherTimestamp = getCypherDate(slug);
+
+const presentEntry = slug ? await getEntryBySlug('present-reality', slug) : null;
+const futureEntry = slug ? await getEntryBySlug('future-echo', slug) : null;
+const reflectionEntry = slug ? await getEntryBySlug('reflection-point', slug) : null;
+
+
+---
+
+<DiaryEntryLayout 
+  date={cypherTimestamp}
+  showIntent={true}
+  present={presentEntry?.rendered?.html ?? `<em>No Present entry for ${date}</em>`}
+  future={futureEntry?.rendered?.html ?? `<em>No Future entry for ${date}</em>`}
+reflection={reflectionEntry?.rendered?.html ?? `<em>No Reflection entry for ${date}</em>`}
+/>

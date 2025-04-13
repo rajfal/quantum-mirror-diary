@@ -1,0 +1,17 @@
+{
+  "name": "quantum-mirror-diary",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "cross-env HOST=127.0.0.1 PORT=3000 astro dev --open",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.6.1",
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}

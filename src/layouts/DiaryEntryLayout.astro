@@ -1,0 +1,445 @@
+---
+import BaseLayout from './BaseLayout.astro';
+const { date, showIntent, present, future, reflection } = Astro.props;
+
+// Helper: convert soft line breaks into individual <p> tags
+function toParagraphs(markdown: string): string {
+  const lines = markdown
+    .split('\n\n')
+    .map(p => `<p>${p.trim()}</p>`)
+    .join('');
+
+  // ✅ Replace [label](hook:slug) → proper styled link with actual URLs
+  return lines.replace(/<a href="hook:([\w-]+)">(.+?)<\/a>/g, (_match, slug, text) => {
+    return `<a class="hook-link" href="/hooks/${slug}">${text}</a>`;
+  });
+}
+
+---
+
+<BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('toggleIntent');
+    const block = document.getElementById('intentBlock');
+
+    toggle.addEventListener('click', () => {
+      block.classList.toggle('collapsed');
+      toggle.textContent = block.classList.contains('collapsed')
+        ? 'System Intent ▸'
+        : 'System Intent ▾';
+    });
+  });
+
+</script>
+
+  <style>
+    :root {
+      --bg: #101014;
+      --accent: #d67dff;   /* For Present section */
+      --echo: #00eaff;     /* For Future section */
+      --text: #eaeaea;
+      --reflection-bg: #1c1c20;
+      --font-body: 'Share Tech Mono', monospace;
+      --font-serif: 'Playfair Display', serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.75;
+      letter-spacing: 0.02em;
+    }
+
+.intent-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.intent-toggle {
+  background: none;
+  color: #ffbd75;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1rem;
+  border: none;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  text-shadow: 0 0 4px rgba(255, 190, 110, 0.3);
+}
+
+.intent-toggle:hover {
+  color: #ffd99c;
+}
+
+.intent-header {
+  background-color: #1c150f;
+  border-left: 5px solid #ffbd75;
+  padding: 2rem;
+  border-radius: 6px;
+  color: #ffe6c7;
+  font-family: 'Share Tech Mono', monospace;
+  box-shadow: 0 0 10px rgba(255, 190, 110, 0.1);
+  max-width: 850px;
+  width: 100%;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  overflow: hidden;
+}
+
+.intent-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  color: #ffbd75;
+  text-align: center;
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 4px rgba(255, 190, 110, 0.3);
+}
+
+.intent-header p {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.intent-header em {
+  color: #ffd99c;
+  font-style: italic;
+  text-shadow: 0 0 3px rgba(255, 200, 130, 0.2);
+}
+
+.intent-header.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+
+.entry-date {
+  text-align: center;
+  color: #00eaff;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.4);
+}
+
+.entry-date span {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      padding: 2.5rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+:global(.section-block a),
+:global(.reflection a) {
+  color: #00eaff;
+  text-decoration: underlined;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  text-shadow: 0 0 3px rgba(0, 255, 255, 0.4);
+}
+
+:global(.section-block a:hover),
+:global(.reflection a:hover) {
+  color: #00ffff;
+  text-decoration: underline;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.6);
+}
+
+    
+.section-block {
+  padding: 2rem;
+  margin: 3rem auto;
+  max-width: 800px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
+  transition: all 0.4s ease;
+  border-left: 4px solid transparent;
+}
+
+.section-block.present {
+  border-color: var(--accent);
+}
+
+.section-block.future {
+  border-color: var(--echo);
+}
+
+.section-block + .section-block,
+.section-block + .reflection,
+.unlock-prompt + .reflection {
+  margin-top: 4rem;
+}
+
+
+.section-block h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+
+.section-block.future h2 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: var(--echo);
+}
+
+.reflection {
+  background-color: #001d00;
+  color: #00ff88;
+  font-family: 'Share Tech Mono', monospace;
+  padding: 2rem;
+  border-left: 4px solid #00ff88;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+  white-space: pre-line;
+  font-size: 0.95rem;
+  text-shadow: 0 0 1px #00ff88, 0 0 2px #00ff88;
+  position: relative;
+  overflow: hidden;
+  max-width: 800px;
+  margin: 3rem auto;
+}
+
+.reflection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.3;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  48% { opacity: 0.92; }
+  50% { opacity: 0.7; }
+  52% { opacity: 0.92; }
+}
+
+.reflection {
+  animation: flicker 5s infinite;
+}
+
+.reflection h2 {
+  color: #39ff14;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 2px #00ff88;
+  z-index: 2;
+  position: relative;
+}
+
+.reflection::after {
+  content: "_";
+  animation: blink 1.2s steps(1, start) infinite;
+  font-weight: bold;
+  margin-left: 0.3rem;
+  color: #00ff88;
+}
+
+.hidden {
+  display: none;
+}
+
+.unlock-prompt {
+  text-align: center;
+  margin: 3rem auto;
+  padding: 1rem;
+  max-width: 600px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.unlock-prompt.visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.terminal-prompt {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 1.1rem;
+  color: #00eaff;
+  cursor: pointer;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.terminal-prompt:hover {
+  color: #00ffff;
+}
+
+.prompt-symbol {
+  margin-right: 0.25rem;
+}
+
+.blinking-cursor {
+  animation: blink 1s step-start infinite;
+  color: #00eaff;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+:global(.hook-link) {
+  color: #00eaff;
+  font-weight: 500;
+  text-decoration: none;
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.5);
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+:global(.hook-link::before) {
+  content: "⧉";
+  margin-right: 0.4rem;
+  color: #00ffff;
+  text-decoration: none;
+  opacity: 0.8;
+  font-size: 0.9em;
+  position: relative;
+  top: -1px;
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.4);
+}
+
+
+    }
+
+  </style>
+
+{showIntent && (
+  <div class="intent-wrapper">
+    <button id="toggleIntent" class="intent-toggle">System Intent ▾</button>
+    <div id="intentBlock" class="intent-header">
+      <h1>System Intent</h1>
+      <p>
+        This diary exists to trace the emotional and technological journey of building decentralized infrastructure
+        in a world drifting toward post-labor economics. As centralized power grows indifferent to human utility,
+        <em>we build anyway</em>—for ourselves, for the network, for what’s next.
+      </p>
+    </div>
+  </div>
+)}
+
+
+<div class="entry-date">
+  {date}
+</div>
+
+ <div class="container">
+
+  <!-- Present -->
+    <div class="section-block present">
+      <h2>Present Reality</h2>
+      <div id="present-content" set:html={toParagraphs(present)} />
+     <div id="present-end-marker" class="sentinel"></div>
+  </div>
+
+
+  <!-- Future -->
+    <div class="section-block future hidden">
+      <h2>Future Echo</h2>
+      <div set:html={toParagraphs(future)} />
+    </div>
+  
+  <!-- Unlock Prompts -->
+  <div id="unlock-future" class="unlock-prompt hidden">
+    <div class="terminal-prompt">
+      <span class="prompt-symbol">&gt;</span>
+      <span class="prompt-text">continue</span><span class="blinking-cursor">_</span>
+    </div>
+  </div>
+
+  <div id="unlock-reflection" class="unlock-prompt hidden">
+    <div class="terminal-prompt">
+      <span class="prompt-symbol">&gt;</span>
+      <span class="prompt-text">continue</span><span class="blinking-cursor">_</span>
+    </div>
+  </div>
+
+  <!-- Reflection -->
+  <div class="reflection hidden">
+    <h2>Reflection Point</h2>
+    <div set:html={toParagraphs(reflection)} />
+  </div>
+
+</div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const futureBlock = document.querySelector('.future');
+  const unlockFuture = document.getElementById('unlock-future');
+  const unlockReflection = document.getElementById('unlock-reflection');
+  const reflection = document.querySelector('.reflection');
+
+  const futurePrompt = unlockFuture.querySelector('.terminal-prompt');
+  const reflectionPrompt = unlockReflection.querySelector('.terminal-prompt');
+
+  const marker = document.getElementById('present-end-marker');
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      setTimeout(() => {
+        unlockFuture.classList.remove('hidden');
+        unlockFuture.classList.add('visible');
+      }, 1500);
+    }
+  }, { threshold: 0.9 });
+
+  observer.observe(marker);
+
+  unlockFuture.addEventListener('click', () => {
+    futureBlock.classList.remove('hidden');
+    unlockFuture.remove();
+    unlockReflection.classList.remove('hidden');
+    setTimeout(() => {
+      unlockReflection.classList.add('visible');
+    }, 1000);
+  });
+
+  unlockReflection.addEventListener('click', () => {
+    reflection.classList.remove('hidden');
+    unlockReflection.remove();
+  });
+});
+
+
+</script>
+
+
+
+
+
+</BaseLayout>
