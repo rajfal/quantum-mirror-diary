@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <a id="top"></a>
+
+  <div class="section-block network-map centered-content">
+    <h1>📡 DePIN Network Map</h1>
+    <p class="subtext">
+  <a href="#active">Current projects</a>, 
+  <a href="#researching">research candidates</a>, 
+  and <a href="#dropped">those left behind</a>.
+</p>
+
+    <h2 id="active">✅ Actively Testing</h2>
+
+    <div class="network-block">
+      <h3>⛓️ Naoris Protocol</h3>
+      <p>🔗 <a href="https://naorisprotocol.network/?ref=[locate_it]" target="_blank">Visit</a></p>
+      <p>📁 Cybersecurity — Joined: Mar 2024 — Status: <strong>Ongoing</strong></p>
+      <p>📌 <strong>Reason Joined:</strong> Future-proof against quantum/cyber threats.</p>
+      <p>🎁 <strong>Benefits:</strong> Token accrual every 6 hrs. Referrals enabled.</p>
+      <p>💰 <strong>Investment:</strong> 3 laptops + 2 phones running client.</p>
+      <p>⚙️ <strong>Maintenance:</strong> Daily health checks. Resets occasionally needed.</p>
+      <p>📈 <strong>Satisfaction:</strong> High.</p>
+    </div>
+
+    <div class="network-block">
+      <h3>⛓️ BlockDAG Network</h3>
+      <p>🔗 <a href="https://blockdag.network/?ref=[locate_it]" target="_blank">Visit</a></p>
+      <p>📁 Blockchain — Joined: Feb 2024 — Status: <strong>Ongoing</strong></p>
+      <p>📌 <strong>Reason Joined:</strong> Chain syncing made simple; early presale interest.</p>
+      <p>🎁 <strong>Benefits:</strong> Pre-TGE token mining via X1 app. Validator mode post-launch.</p>
+      <p>💰 <strong>Investment:</strong> $200 for 32K tokens.</p>
+      <p>⚙️ <strong>Maintenance:</strong> 9 phones. Power loss risk. Reset every ~24 days.</p>
+      <p>📈 <strong>Satisfaction:</strong> Med-High. Awaiting TGE.</p>
+    </div>
+
+    <h2 id="researching">🔍 Researching / Watching</h2>
+
+    <div class="network-block">
+      <h3>⛓️ AUKI Network</h3>
+      <p>🔗 <a href="https://auki.ai/" target="_blank">Visit</a></p>
+      <p>📁 Spatial Computing — Monitoring: Since Mar 2024 — Status: <strong>Watching</strong></p>
+      <p>📌 <strong>Interest:</strong> Spatial + AI integration feels intuitive & explainable.</p>
+      <p>🧪 <strong>Waiting For:</strong> Node release; testing use in home space.</p>
+      <p>💰 <strong>Tokens Held:</strong> 12K+ $AUKI in wallet.</p>
+    </div>
+
+    <div class="network-block">
+      <h3>⛓️ XMaquina</h3>
+      <p>🔗 <a href="https://xmaquina.ai/" target="_blank">Visit</a></p>
+      <p>📁 Physical AI — Monitoring: Since Mar 2024 — Status: <strong>Watching</strong></p>
+      <p>📌 <strong>Interest:</strong> Individual control of robotic fleets pre-mass adoption.</p>
+      <p>🧪 <strong>Waiting For:</strong> Token auction April 29th.</p>
+    </div>
+
+    <h2 id="dropped">❌ Dropped Projects</h2>
+
+    <div class="network-block">
+      <h3>⛓️ AIOZ Network</h3>
+      <p>🔗 <a href="https://aioz.network/?ref=yourrefcode" target="_blank">Visit</a></p>
+      <p>📁 Decentralized Video CDN — Joined: Jan 2024 — Status: <strong>Dropped</strong></p>
+      <p>📌 <strong>Reason Joined:</strong> First DePIN exposure via RealVision.</p>
+      <p>🎁 <strong>Benefit:</strong> Token rewards for running compute node.</p>
+      <p>💰 <strong>Investment:</strong> 100GB partitioned for use.</p>
+      <p>⚙️ <strong>Maintenance:</strong> On Linux. Uptime cut during logins.</p>
+      <p>📈 <strong>Feedback:</strong> Low ROI. Lost a month’s phone credit.</p>
+    </div>
+  </div>
+
+<div class="back-to-top">
+  <a href="#top">↩ Back to Top</a>
+</div>
+
+</BaseLayout>
+
+<style>
+  .network-map {
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ff88;
+  }
+
+  .network-map h1, .network-map h2 {
+    color: #00ffaa;
+    text-shadow: 0 0 3px #00ffaa;
+    margin-top: 2rem;
+  }
+
+.network-map a {
+  color: #00ffee;
+  text-decoration: underline;
+}
+
+.network-map a:hover {
+  color: #00ffff;
+  text-shadow: 0 0 4px #00ffff;
+}
+
+
+.centered-content {
+  max-width: 800px;
+  margin: 0 auto;
+  align: center;
+}
+
+
+  .network-block {
+    background: rgba(0, 255, 136, 0.05);
+    border-left: 3px solid #00ff88;
+    padding: 1rem 1.2rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 0 4px rgba(0, 255, 136, 0.1);
+  }
+
+  .network-block h3 {
+    color: #00ffaa;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  .network-block p {
+    margin: 0.2rem 0;
+    line-height: 1.5;
+  }
+
+  .network-block a {
+    color: #00ffee;
+    text-decoration: underline;
+  }
+
+  .network-block a:hover {
+    color: #00ffff;
+    text-shadow: 0 0 4px #00ffff;
+  }
+
+
+.back-to-top {
+  text-align: center;
+  margin: 3rem 0 1rem;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.back-to-top a {
+  color: #00ff88;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.back-to-top a:hover {
+  color: #00ffaa;
+  text-shadow: 0 0 4px #00ffaa;
+}
+
+</style>

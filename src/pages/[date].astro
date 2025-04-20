@@ -27,17 +27,29 @@ const { date } = Astro.params;
 
 const cypherTimestamp = getCypherDate(date);
 
-import { getEntryBySlug } from 'astro:content';
+import { getEntry } from 'astro:content';
 
-const presentEntry = await getEntryBySlug('present-reality', date);
-const futureEntry = await getEntryBySlug('future-echo', date);
-const reflectionEntry = await getEntryBySlug('reflection-point', date);
+// Render each block only if available
+const presentHtml = presentEntry?.rendered?.html ?? `<em>No Present entry for ${date}</em>`;
+const futureHtml = futureEntry?.rendered?.html ?? `<em>No Future entry for ${date}</em>`;
+const reflectionHtml = reflectionEntry?.rendered?.html ?? `<em>No Reflection entry for ${date}</em>`;
 ---
 
 <DiaryEntryLayout 
   date={cypherTimestamp}
-  showIntent={false} 
-  present={presentEntry?.rendered?.html ?? `<em>No Present entry for ${date}</em>`}
-  future={futureEntry?.rendered?.html ?? `<em>No Future entry for ${date}</em>`}
-reflection={reflectionEntry?.rendered?.html ?? `<em>No Reflection entry for ${date}</em>`}
+  showIntent={false}
+  present={presentHtml}
+  future={futureHtml}
+  reflection={reflectionHtml}
 />
+
+<style>
+
+:global(em) {
+  color: #00ff88;
+  font-style: normal;
+  opacity: 0.6;
+  text-shadow: 0 0 3px rgba(0, 255, 136, 0.4);
+}
+
+</style>

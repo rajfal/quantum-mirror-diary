@@ -5,7 +5,7 @@ import { getEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const { slug } = Astro.params;
-const entry = await getEntry('hooks', slug).catch(() => null);
+const entry = await getEntry('manual', slug).catch(() => null);
 const notFound = !entry;
 
 let Content, data;
@@ -17,48 +17,63 @@ if (!notFound) {
 ---
 
 <BaseLayout>
-  <div class="hook-container">
+  <div class="manual-container">
     {notFound ? (
       <div class="section-block not-found">
-        <h1>⧉ Hook Not Found</h1>
-        <p>This hook doesn’t exist: <code>{slug}</code></p>
-        <p><a href="/hooks">← Back to Hook Archive</a></p>
+        <h1>📄 Manual Not Found</h1>
+        <p>This manual entry doesn’t exist: <code>{slug}</code></p>
+        <p><a href="/manual">← Back to Manual Index</a></p>
       </div>
     ) : (
-      <article class="hook-article">
-        <h1 class="hook-title">⧉ {data.title}</h1>
-        {data.summary && <p class="hook-summary">{data.summary}</p>}
-        <div class="hook-content">
-          <Content />
-        </div>
-      </article>
+      <article class="manual-article">
+  <h1 class="manual-title">🧪 {data.title}</h1>
+  {data.tags && <p class="manual-meta">Tags: {data.tags.join(', ')}</p>}
+  <div class="manual-content">
+    <Content />
+  </div>
+</article>
+
     )}
   </div>
 </BaseLayout>
 
 <style>
-.hook-container {
+
+.manual-container {
   max-width: 800px;
   margin: 3rem auto;
   padding: 0 1rem;
 }
 
-.hook-article {
+
+:global(.manual-content a) {
+  color: #00ffee;
+  text-decoration: underline;
+  transition: all 0.2s ease-in-out;
+}
+
+:global(.manual-content a:hover) {
+  color: #00ffff;
+  text-shadow: 0 0 4px #00ffff;
+}
+
+
+.manual-article {
   font-family: 'Share Tech Mono', monospace;
   color: #cfffff;
 }
 
-.hook-title {
+.manual-title {
   font-size: 1.7rem;
-  color: #00ffaa;
+  color: #00eaff;
   margin-bottom: 0.5rem;
-  text-shadow: 0 0 4px rgba(0, 255, 170, 0.4);
+  text-shadow: 0 0 4px rgba(0, 255, 255, 0.4);
 }
 
-.hook-summary {
-  font-size: 0.95rem;
+.manual-meta {
+  font-size: 0.9rem;
   color: #88ffff;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   opacity: 0.7;
 }
 
@@ -82,14 +97,4 @@ if (!notFound) {
   text-shadow: 0 0 4px #00ffff;
 }
 
-:global(.hook-content a) {
-  color: #00ffee;
-  text-decoration: underline;
-  transition: all 0.2s ease-in-out;
-}
-
-:global(.hook-content a:hover) {
-  color: #00ffff;
-  text-shadow: 0 0 4px #00ffff;
-}
 </style>

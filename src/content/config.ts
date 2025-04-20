@@ -11,9 +11,19 @@ const hooksSchema = z.object({
   tags: z.array(z.string()).optional(),
 });
 
+const manualCollection = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    date: z.string(),
+    tags: z.array(z.string())
+  })
+});
+
 export const collections = {
   'present-reality': defineCollection({ schema: diarySchema }),
   'future-echo': defineCollection({ schema: diarySchema }),
   'reflection-point': defineCollection({ schema: diarySchema }),
   'hooks': defineCollection({ schema: hooksSchema }),
+  'manual': manualCollection
 };

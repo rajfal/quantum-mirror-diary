@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <div class="section-block error-terminal">
+    <h1 class="error-title">⛔ Unlinked Node</h1>
+    <p class="error-subtitle">This address doesn't map to any known log entry, hook, or manual.</p>
+
+    <p class="error-message">Either the node was never linked, the protocol has changed, or this timeline diverged.</p>
+
+    <p class="error-nav">
+      You can <a href="/">return to the last stable checkpoint</a>, or run a <a href="/hooks">scan of known hooks</a>.
+    </p>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-terminal {
+    font-family: 'Share Tech Mono', monospace;
+    background-color: #001d00;
+    color: #00ff88;
+    border-left: 4px solid #00ff88;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+    margin: 4rem auto;
+    max-width: 720px;
+    padding: 2rem;
+    animation: flicker 4s infinite;
+  }
+
+  .error-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 0 2px #00ff88;
+  }
+
+  .error-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .error-message {
+    margin-bottom: 1.2rem;
+  }
+
+  .error-nav a {
+    color: #00ff88;
+    text-decoration: underline;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .error-nav a:hover {
+    color: #00ffaa;
+    text-shadow: 0 0 4px #00ffaa;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    48% { opacity: 0.92; }
+    50% { opacity: 0.6; }
+    52% { opacity: 0.9; }
+  }
+</style>

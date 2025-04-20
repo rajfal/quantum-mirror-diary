@@ -12,6 +12,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       font-family: 'Share Tech Mono', monospace;
     }
 
+.about-page blockquote {
+  margin-top: 2rem;
+  padding-left: 1.2rem;
+  border-left: 3px solid #00ff88;
+  font-family: 'Share Tech Mono', monospace;
+  color: #00ff88;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-shadow: 0 0 2px #00ff88;
+  position: relative;
+  animation: flicker 4s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.9; }
+  50% { opacity: 0.6; }
+  55% { opacity: 0.92; }
+  70% { opacity: 0.8; }
+}
+
+.about-page blockquote::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    rgba(0, 255, 136, 0.03) 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: 2.2rem;
@@ -84,33 +119,69 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   </style>
 
-  <div class="about-container">
-    <h1>About Quantum Mirror Diary</h1>
+  <div class="about-container .about-page">
+    <h1 class="about-title">🧬 About The Quantum Mirror DePIN Logs</h1>
 
-    <p>
-      <em>Quantum Mirror Diary</em> is an experiment in nonlinear time, memory, and reflection. It exists between the lines of a present unfolding and a future that already remembers.
-    </p>
+    <p class="about-intro"><strong>Building Tomorrow's Infrastructure While It's Still Invisible</strong></p>
 
-    <p>
-      The <strong>first section</strong>—<em>Present Reality</em>—records my thoughts and actual actions I take to implement DePIN projects in real time.
-</p>
-<p>
-      The <strong>second section</strong>—<em>Future Echo</em>—is written by Michael Chen from the year 2033. Michael spent the previous several years experimenting and installing DePIN infrastructure following his own professional demise. His observations offer a retrospective of the time between now and his own.
-    </p>
+    <p>Welcome to a different kind of journey—one that exists simultaneously in two realities.</p>
 
-    <p class="highlight">
-      Following them is the <em>Reflection Point</em>—a quiet convergence where insight forms, shaped by both the now and the not-yet.
-    </p>
+    <p>The Quantum Mirror DePIN Logs chronicle my exploration of <strong>Decentralized Physical Infrastructure Networks (DePIN)</strong>, a revolutionary approach to building the essential systems our digital future will depend on. But with a twist: these logs exist in two parallel timelines, creating a conversation between present action and future reflection.</p>
 
-    <p>
-      Occasionally, you'll find links to <a href="/#DePIN">DePIN</a> projects—Decentralized Physical Infrastructure that echoes this diary’s ethos of reclaiming agency. These may include referral links, offered transparently.
-    </p>
+    <h2>🔧 What Are DePIN Projects?</h2>
+    <p>DePIN stands for <strong>Decentralized Physical Infrastructure Networks</strong>—a new paradigm where everyday people like you and me can own and operate pieces of crucial infrastructure traditionally controlled by large corporations or governments.</p>
 
-    <p>
-      Thank you for entering this layered space.
-    </p>
+    <p>These networks span numerous domains:</p>
+    <ul>
+      <li>Computing power and data storage</li>
+      <li>Wireless connectivity and VPN services</li>
+      <li>Cybersecurity systems</li>
+      <li>Location and spatial computing</li>
+      <li>Environmental monitoring</li>
+      <li>And much more...</li>
+    </ul>
 
-<hr />
+    <p>By participating in these networks, individuals can earn cryptocurrency tokens while helping build resilient, censorship-resistant infrastructure that doesn't depend on centralized authorities.</p>
+
+    <h2>🪞 The Quantum Mirror Approach</h2>
+    <p>These logs follow a unique format I call the <em>Quantum Mirror</em>:</p>
+    <ul>
+      <li><strong>Present Reality (2025)</strong> — Day-to-day experiences building and testing DePIN nodes</li>
+      <li><strong>Future Echo (2033-2034)</strong> — Fictional reflections from “Michael Chen” with hindsight</li>
+      <li><strong>Reflection Point</strong> — Unifying insights that bridge both perspectives</li>
+    </ul>
+
+    <h2>🧠 Why This Format Matters</h2>
+    <p>This isn't just creative writing—it's a <em>thinking tool</em> that helps reveal patterns, inform decisions, and refocus on fundamentals over hype.</p>
+
+    <h2>🛠 My Journey So Far</h2>
+    <p>I began after my traditional career path was destabilized by rapid technological change. Rather than resist it, I chose to explore emerging infrastructure through protocols like:</p>
+    <ul>
+      <li><strong>AIOZ</strong> — AI computation, data storage, and media streaming for Web3 dApps</li>
+      <li><strong>Naoris Protocol</strong> — Post-quantum cybersecurity mesh</li>
+      <li><strong>Acurast</strong> — Distributed phone-based computing</li>
+      <li><strong>Auki.ai</strong> — Decentralized spatial computing</li>
+      <li><strong>Anyone Network</strong> — Privacy-focused VPN alternative</li>
+    </ul>
+
+    <p>Each contributes to a resilient, AI-integrated future infrastructure layer.</p>
+
+    <h2>🧭 For Newcomers: How To Use These Logs</h2>
+    <ul>
+      <li>🌱 <strong>Start small</strong> — Test projects before scaling</li>
+      <li>🧩 <strong>Look for fundamentals</strong> — What real-world problem is solved?</li>
+      <li>🌐 <strong>Think in systems</strong> — Value comes from real-world utility</li>
+      <li>⏳ <strong>Be patient</strong> — Infrastructure is a long game</li>
+      <li>📖 <strong>Value knowledge</strong> — Protocol literacy > shiny hardware</li>
+    </ul>
+
+    <h2>🌍 The Bigger Picture</h2>
+    <p>This isn’t just about gadgets or tokens. It’s about being part of a larger shift—from labor-based economies to ownership-based resilience. DePIN may be one of the few tools we have to shape that future intentionally.</p>
+
+    <blockquote>
+      <em>"The most valuable digital real estate isn't what's immediately visible, but what becomes essential when existing systems fail."</em>
+    </blockquote>
+
 
 <div class="timeline-invite">
   ⧉ PS: Curious how this all began?<br />

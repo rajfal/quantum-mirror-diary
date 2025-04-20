@@ -1,0 +1,20 @@
+[
+  {
+    "type": "hook",
+    "title": "Post-Labour Drift",
+    "summary": "Economic freefall and identity erosion after redeployment.",
+    "slug": "hooks/post-labour-drift"
+  },
+  {
+    "type": "essay",
+    "title": "Decentralize or Die",
+    "summary": "A DePIN manifesto in miniature.",
+    "slug": "manual/decentralize-or-die"
+  },
+  {
+    "type": "timeline",
+    "title": "2025 — The First Uplink",
+    "summary": "",
+    "slug": "log/timeline#2025"
+  }
+]

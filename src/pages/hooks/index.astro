@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IndexRenderer from '../../components/IndexRenderer.astro';
+
+const entries = await getCollection('hooks');
+entries.sort((a, b) => b.data.title.localeCompare(a.data.title));
+---
+
+<BaseLayout>
+  <IndexRenderer 
+  entries={entries}
+  title="Hooks Archive"
+  icon="⧉"
+  basePath="hooks"
+  collectionType="hook"
+/>
+
+
+<script is:script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('hookSearchInput');
+    const items = document.querySelectorAll('.hook-item');
+
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase();
+
+      items.forEach(item => {
+        const title = item.querySelector('.hook-name')?.textContent.toLowerCase() || '';
+        const summary = item.querySelector('.hook-summary')?.textContent.toLowerCase() || '';
+
+        const match = title.includes(q) || summary.includes(q);
+        item.style.display = match ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+
+
+  <style>
+    .hook-search {
+      margin-bottom: 1.5rem;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00ff88;
+    }
+
+    .terminal-label {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: #00ff88;
+      text-shadow: 0 0 1px #00ff88;
+    }
+
+    .hook-search-input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.9rem;
+      background-color: #001d00;
+      color: #00ff88;
+      border: 1px solid #00ff88;
+      border-radius: 3px;
+      outline: none;
+      box-shadow: 0 0 3px rgba(0, 255, 136, 0.2);
+    }
+
+    .hook-search-input::placeholder {
+      color: #44ff99;
+      opacity: 0.4;
+    }
+  </style>
+</BaseLayout>

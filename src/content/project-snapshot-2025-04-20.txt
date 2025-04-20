@@ -1,0 +1,38 @@
+
+🧠 Quantum Mirror Diary — Project Snapshot (April 2025)
+🔧 Framework
+Astro 5.6.1
+
+Markdown-based content collections
+
+Hosted on Netlify
+
+Git-backed local development
+
+📂 Project Structure Highlights
+
+Path | Purpose
+/src/pages/index.astro | Renders the latest diary entry
+/src/pages/[date].astro | Displays Present/Future/Reflection with graceful fallbacks
+/src/pages/hooks/[slug].astro | Hook entries with error fallback
+/src/pages/manual/[slug].astro | Personal essays with fallback
+/src/pages/archive/index.astro | Diary entry archive
+/src/pages/hooks/index.astro | Hook archive with terminal search
+/src/pages/manual/index.astro | Manual archive with search
+/src/pages/network.astro | DePIN network map (soon to be updated)
+/src/components/IndexRenderer.astro | Reusable archive listing UI
+/src/utils/toParagraphs.ts | Paragraph formatting + hook link handling
+/utils/getCypherDate.js | Converts slug to cypherpunk-style date
+/data/signal-scan.json (replaced) | Deprecated — now merged from hooks/manuals
+
+
+🧠 UX Features
+Sequential Reveal: Users must scroll through Present → unlock Future → unlock Reflection
+
+Signal Scan: Highlighted recent updates (hooks + manuals)
+
+Search: Hook/manual/archive pages support terminal-style live search
+
+Fallbacks: Every dynamic route has safe rendering if entries are missing
+
+Terminal Aesthetic: Flicker animations, CRT styling, blinking cursors, prompt glyphs

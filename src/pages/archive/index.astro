@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IndexRenderer from '../../components/IndexRenderer.astro';
+
+const entries = await getCollection('present-reality');
+entries.sort((a, b) => b.data.date.localeCompare(a.data.date)).reverse();
+---
+
+<BaseLayout>
+  <IndexRenderer 
+  entries={entries}
+  title="Diary Archive"
+  icon="🗓"
+  basePath=""
+  collectionType="diary"
+/>
+
+</BaseLayout>
