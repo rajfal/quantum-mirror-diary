@@ -30,6 +30,9 @@ if (!notFound) {
   {data.tags && <p class="manual-meta">Tags: {data.tags.join(', ')}</p>}
   <div class="manual-content">
     <Content />
+    <p class="back-to-archive">
+     ← <a href="/manual">Back to Manual Archive</a>
+    </p>
   </div>
 </article>
 
@@ -96,5 +99,19 @@ if (!notFound) {
   color: #00ffff;
   text-shadow: 0 0 4px #00ffff;
 }
+
+.back-to-archive {
+  margin-top: 3rem;
+  text-align: center;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.back-to-archive a {
+  color: #00eaff;
+  text-decoration: underline;
+}
+
 
 </style>

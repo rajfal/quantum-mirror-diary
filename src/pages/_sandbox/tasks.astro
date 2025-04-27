@@ -1,0 +1,70 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const blockdag = await getEntry('tasks', 'blockdag').catch(() => null);
+const naoris = await getEntry('tasks', 'naoris').catch(() => null);
+const xmaquina = await getEntry('tasks', 'xmaquina').catch(() => null);
+
+const entries = [
+  { title: 'BlockDAG', data: blockdag?.data, Content: blockdag ? (await blockdag.render()).Content : null },
+  { title: 'Naoris Protocol', data: naoris?.data, Content: naoris ? (await naoris.render()).Content : null },
+  { title: 'XMaquina', data: xmaquina?.data, Content: xmaquina ? (await xmaquina.render()).Content : null },
+];
+---
+
+<BaseLayout>
+  <section class="console-block">
+    <h1>📋 Daily / Weekly Ops Panel</h1>
+    <p>This is your operational cockpit — project tasks, research queues, daily rituals. Check them, review them, do the work.</p>
+  </section>
+
+  {entries.map(({ title, Content }) => (
+    <section class="task-group console-block">
+      <h2>🧩 {title}</h2>
+      {Content && <div class="markdown-task"><Content /></div>}
+    </section>
+  ))}
+</BaseLayout>
+
+<style>
+.console-block {
+  margin-bottom: 3rem;
+  border-left: 4px solid #00ff88;
+  padding-left: 1.5rem;
+  background: rgba(0, 255, 136, 0.03);
+  box-shadow: 0 0 8px rgba(0, 255, 136, 0.1);
+  padding: 2rem;
+}
+
+.task-group h2 {
+  color: #00ffaa;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.markdown-task ul {
+  list-style: none;
+  padding-left: 0;
+  line-height: 1.6;
+}
+
+.markdown-task li {
+  font-family: 'Share Tech Mono', monospace;
+  color: #00ffee;
+  font-size: 0.9rem;
+}
+
+.markdown-task li:has(🔥) {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+.markdown-task blockquote {
+  color: #66ffaa;
+  font-style: italic;
+  margin-left: 1rem;
+  border-left: 2px dashed #00ffaa;
+  padding-left: 0.5rem;
+}
+</style>

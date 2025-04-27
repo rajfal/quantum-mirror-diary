@@ -1,0 +1,104 @@
+{
+  "$ref": "#/definitions/depins",
+  "definitions": {
+    "depins": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "watching",
+            "dropped"
+          ]
+        },
+        "joined": {
+          "type": "string"
+        },
+        "left": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "category": {
+          "type": "string"
+        },
+        "referral": {
+          "type": "string"
+        },
+        "tokensHeld": {
+          "type": "number"
+        },
+        "tradeable": {
+          "type": "boolean"
+        },
+        "dailyTasks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "weeklyTasks": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "investment": {
+          "type": "object",
+          "properties": {
+            "usd": {
+              "type": "number"
+            },
+            "deviceCount": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "usd",
+            "deviceCount"
+          ],
+          "additionalProperties": false
+        },
+        "maintenance": {
+          "type": "string"
+        },
+        "satisfaction": {
+          "type": "string"
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "slug",
+        "status",
+        "joined",
+        "left",
+        "category",
+        "referral",
+        "tokensHeld",
+        "tradeable",
+        "dailyTasks",
+        "weeklyTasks",
+        "description",
+        "investment",
+        "maintenance",
+        "satisfaction"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

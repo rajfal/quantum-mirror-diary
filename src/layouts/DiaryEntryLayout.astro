@@ -202,8 +202,10 @@ function toParagraphs(html) {
 
 .section-block,
 .reflection {
-  margin: 1.25rem auto;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 }
+
 
 .section-block p {
   margin-top: 0.1em;
@@ -470,7 +472,7 @@ function toParagraphs(html) {
         {Astro.props.signalItems.map(entry => {
           const type = entry.collection === 'manual' ? 'Manual' : 'Hook';
           const glyph = type === 'Manual' ? '🧪' : '⧉';
-          const path = `/${type.toLowerCase()}/${entry.slug}`;
+          const path = `/${entry.collection}/${entry.slug}`;
           return (
             <li>
               <a href={path} class="signal-item">

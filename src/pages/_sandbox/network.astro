@@ -1,0 +1,369 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import { getEntry } from 'astro:content';
+
+import { getCollection } from 'astro:content';
+
+const depins = await getCollection('depins');
+
+// Separate by status
+const active = depins.filter(d => d.data.status === 'active');
+const watching = depins.filter(d => d.data.status === 'watching');
+const dropped = depins.filter(d => d.data.status === 'dropped');
+
+// Get token bar only from active
+const tokenBars = active.map(p => ({
+  title: p.data.title,
+  tokens: p.data.tokensHeld,
+  tradeable: p.data.tradeable
+}));
+
+// Optional: total for scaling bars
+const maxTokens = Math.max(...tokenBars.map(t => t.tokens));
+
+
+---
+
+<BaseLayout>
+  <div class="network-console">
+    <!-- Sidebar -->
+    <aside class="console-sidebar">
+      <h2>☰ MENU</h2>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#tokens">Tokens</a></li>
+        <li><a href="#tasks">Tasks</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="console-main">
+      <section id="overview" class="console-block">
+        <h1>🧠 DePIN Command Console</h1>
+        <p>Projects: 3 Active · 2 Researching · 1 Dropped</p>
+        <p>Total Tokens Held: 54,000</p>
+        <p>Time Invested: ~45 mins/day</p>
+        <p>Last Updated: Apr 10, 2025</p>
+        <p>📋 <a href="/tasks" class="terminal-link">View All Ops Tasks →</a></p>
+
+      </section>
+
+ <section class="console-block">
+  <h2>⛓️ Projects by Engagement</h2>
+
+  <h3>🔵 Active</h3>
+  <ul class="depins-list">
+    {active.map(p => (
+      <li><a href={p.data.referral} target="_blank">{p.data.title}</a> — {p.data.description}</li>
+    ))}
+  </ul>
+
+  <h3>🟡 Watching</h3>
+  <ul class="depins-list">
+    {watching.map(p => (
+      <li><a href={p.data.referral} target="_blank">{p.data.title}</a> — {p.data.description}</li>
+    ))}
+  </ul>
+
+  <h3>🔴 Dropped</h3>
+  <ul class="depins-list">
+    {dropped.map(p => (
+      <li><a href={p.data.referral} target="_blank">{p.data.title}</a> — No longer tracked</li>
+    ))}
+  </ul>
+</section>
+<!-- End Projects -->
+
+ <section class="console-block">
+  <h2>🪙 Token Summary</h2>
+
+  <div class="token-summary">
+    {tokenBars.map(bar => (
+      <div class="token-bar">
+        <span class="token-label">{bar.title}</span>
+        <div class={`token-fill ${bar.tradeable ? 'live' : 'pre-tge'}`} style={`width: ${(bar.tokens / maxTokens) * 100}%`}>
+          {bar.tokens.toLocaleString()}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="token-legend">
+    <p><span class="legend-box live"></span> Tradeable</p>
+    <p><span class="legend-box pre-tge"></span> Pre-TGE / Unlocked</p>
+  </div>
+</section>
+<!-- End Tokens-->
+
+ <section class="console-block">
+  <h2>📍 Daily Ops</h2>
+  {active.map(p => (
+    <div class="project-tasks">
+      <h3>{p.data.title}</h3>
+      <ul>
+        {p.data.dailyTasks.map(task => (
+          <li>{task}</li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</section>
+
+
+ <section class="console-block">
+  <h2>📡 Weekly Research</h2>
+  {active.map(p => (
+    <div class="project-tasks">
+      <h3>{p.data.title}</h3>
+      <ul>
+        {p.data.weeklyTasks.map(task => (
+          <li>{task}</li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</section>
+<!-- End Tasks-->
+
+    </main>
+  </div>
+
+  <style>
+
+a {
+  color: #00eaff;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  text-shadow: 0 0 3px rgba(0, 255, 255, 0.4);
+}
+
+a:hover {
+  color: #00ffff;
+  text-shadow: 0 0 5px rgba(0, 255, 255, 0.6);
+}
+
+
+    .network-console {
+      display: flex;
+      background: #001a00;
+      font-family: 'Share Tech Mono', monospace;
+      color: #00ff99;
+    }
+
+    .console-sidebar {
+      width: 200px;
+      padding: 2rem 1rem;
+      background: #002a00;
+      border-right: 2px solid #00ff88;
+    }
+
+    .console-sidebar h2 {
+      color: #00ffaa;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .console-sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .console-sidebar li a {
+      display: block;
+      color: #00ffee;
+      padding: 0.5rem 0;
+      text-decoration: none;
+    }
+
+    .console-main {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .console-block {
+      margin-bottom: 3rem;
+      border-left: 4px solid #00ff88;
+      padding-left: 1.5rem;
+      background: rgba(0, 255, 136, 0.03);
+      box-shadow: 0 0 8px rgba(0, 255, 136, 0.1);
+    }
+
+    .console-block h1,
+    .console-block h2 {
+      color: #00ffaa;
+      margin-bottom: 1rem;
+    }
+
+
+    .project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.project-card {
+  background: rgba(0, 255, 136, 0.04);
+  border-left: 3px solid #00ff88;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0, 255, 136, 0.1);
+  transition: all 0.2s ease;
+}
+
+.project-card h3 {
+  color: #00ffaa;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-card.active {
+  border-left-color: #00ff88;
+}
+
+.project-card.researching {
+  border-left-color: #ffee00;
+}
+
+.project-card.dropped {
+  border-left-color: #ff4444;
+  opacity: 0.7;
+}
+
+
+.token-summary {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.token-bar {
+  display: flex;
+  align-items: center;
+  background: #002f00;
+  border: 1px solid #00ff88;
+  position: relative;
+  height: 1.8rem;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.token-label {
+  width: 100px;
+  padding-left: 0.5rem;
+  color: #00ffaa;
+  font-size: 0.85rem;
+  z-index: 2;
+}
+
+.token-fill {
+  height: 100%;
+  text-align: right;
+  padding-right: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: bold;
+  font-family: 'Share Tech Mono', monospace;
+  transition: width 0.5s ease;
+}
+
+.token-fill.live {
+  background: linear-gradient(90deg, #00ffaa 0%, #00ffcc 100%);
+  color: #002f00;
+}
+
+.token-fill.pre-tge {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0, 255, 136, 0.18),
+    rgba(0, 255, 136, 0.18) 4px,
+    rgba(0, 255, 136, 0.08) 4px,
+    rgba(0, 255, 136, 0.08) 8px
+  );
+  color: #00ffaa;
+  font-style: italic;
+  opacity: 0.95;
+}
+
+.token-legend {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #00ffaa;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.legend-box {
+  display: inline-block;
+  width: 1.5rem;
+  height: 0.8rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.legend-box.live {
+  background: linear-gradient(90deg, #00ffaa 0%, #00ffcc 100%);
+}
+
+.legend-box.pre-tge {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0, 255, 136, 0.18),
+    rgba(0, 255, 136, 0.18) 4px,
+    rgba(0, 255, 136, 0.08) 4px,
+    rgba(0, 255, 136, 0.08) 8px
+  );
+}
+
+
+.task-group {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-left: 3px solid #00ffaa;
+  background: rgba(0, 255, 170, 0.03);
+}
+
+.task-group h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  color: #00ffaa;
+}
+
+.task-group ul {
+  list-style: none;
+  padding-left: 0;
+  line-height: 1.6;
+}
+
+.task-group li {
+  font-family: 'Share Tech Mono', monospace;
+  color: #00ffee;
+  font-size: 0.9rem;
+}
+
+.markdown-task ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.markdown-task li {
+  font-family: 'Share Tech Mono', monospace;
+  color: #00ffee;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.terminal-link {
+  color: #00ffcc;
+  font-family: 'Share Tech Mono', monospace;
+  text-decoration: underline;
+}
+
+
+
+  </style>
+</BaseLayout>
