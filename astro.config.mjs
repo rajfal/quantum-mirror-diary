@@ -1,11 +1,13 @@
 // astro.config.mjs
-//trailingSlash: 'always',
 
 import { defineConfig } from 'astro/config';
+import netlify from '@astrojs/netlify';
 
 export default defineConfig({
-  site: 'http://127.0.0.1:3000',
-  
+  site: 'https://quantum.agenticreports.com', // Later update this to your real domain!
+  output: 'server', // Important for Netlify serverless functions
+  adapter: netlify(),
+
   server: {
     host: process.env.HOST ?? '127.0.0.1',
     port: Number(process.env.PORT) || 3000
@@ -19,3 +21,4 @@ export default defineConfig({
     }
   }
 });
+
